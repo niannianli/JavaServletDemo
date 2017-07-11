@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="operation" class="com.spring.bean.Operation">
+        <property name="sign" value="add" />
+    </bean>
+    
+    <!-- by defualt, singleton; now different objects: scope="prototype" -->
+     <bean id="employee" class="com.spring.bean.Employee">
+  <!--  pass value by constructor   <constructor-arg index="0" value="78" />--> 
+    </bean>
+    
+     <bean id="address" class="com.spring.bean.Address">
+        <property name="id" value="1" />
+         <property name="street" value="broadway" />
+          <property name="zipcode" value="12345" />
+    </bean>
+    
+        <bean id="student" class="com.spring.bean.Student">
+    </bean>
+    
+    <!-- byName: look for bean id to match class variable -->
+    <!-- byType: type of the variable is SessionFactory; then look same type of bean -->
+     <!--  if ther are too many same types of beans, spring does not know, better use byName -->
+     <!--  we can also use constructor/byType autowire, define constructor in class -->
+      <bean id="studentDao" class="com.spring.dao.StudentDao" autowire="byName">
+  <!--     <property name="sessionFactory" ref="sessionFactory" />--> 
+    </bean>
+    
+<!-- this single bean can be used by multiple beans -->
+<bean id="user" class="com.spring.bean.User">
+</bean>
+
+<bean id="clazz" class="com.spring.bean.Clazz" scope="singleton">
+<property name="name" value="Brian"></property>
+<property name="id" value="1"></property>
+<property name="user" ref="user"></property>
+</bean>
+
+<bean id="clazz2" class="com.spring.bean.Clazz2">
+<property name="user" ref="user"></property>
+</bean>
+    
+    <!-- autowire -->    
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/java_data"/>
+        <property name="username" value="root"/>
+        <property name="password" value="love"/>
+    </bean>
+    
+    <!-- now i want to use hibernate, no need new .xml file, configure here only --> 
+     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- no use of .xml with mapping class, pojo class: table, we use this tag -->
+        <property name="packagesToScan">
+            <list>
+                <value>com.spring</value>
+            </list>
+        </property>
+        
+        <property name="hibernateProperties">
+           <props>
+            <prop key="hbm2ddl.auto">update</prop>
+            <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+            <prop key="hibernate.show_sql">true</prop>
+        </props>
+        </property>
+        
+    </bean>
+
+</beans>
