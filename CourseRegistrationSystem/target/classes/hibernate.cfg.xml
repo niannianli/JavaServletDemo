@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+    
+     	<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!-- Database connection settings -->
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/java_392</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">love</property>   
+       
+         <property name="hibernate.show_sql">true</property>
+         
+         <!--tell hibernate to create a table in db-->
+           <property name="hibernate.hbm2ddl.auto">update</property>
+       
+        <mapping class="com.hib.demo.pojo.User"/>
+        <mapping class="com.hib.demo.pojo.Address"/>
+        	<mapping class="com.hib.demo.pojo.Employee"/>
+        	<mapping class="com.hib.demo.pojo.old_employee"/>
+        	<mapping class="com.hiber.demo.pojo.Student" />
+<mapping class="com.hiber.demo.pojo.Teacher" />
+<mapping class="com.hiber.demo.pojo.Course" />
+	<mapping class="com.hiber.demo.pojo.StudentCourseMapping" />
+   
+    </session-factory>
+</hibernate-configuration>
